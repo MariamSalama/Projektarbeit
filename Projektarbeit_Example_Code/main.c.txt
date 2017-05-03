@@ -1,0 +1,57 @@
+#include "ses_led.h"
+#include <util/delay.h>
+#include "ses_lcd.h"
+#include "ses_button.h"
+#include "ses_adc.h"
+
+
+int main(void) {
+	button_init();
+	led_redInit();
+	led_greenInit();
+	uint8_t return_values_from_joystick;
+	adc_init();
+	led_yellowInit();
+
+	while(1){
+
+		/*
+		if(button_isJoystickPressed())
+			led_redOn();
+		else
+			led_redOff();
+		if(button_isRotaryPressed())
+			led_greenOn();
+		else
+			led_greenOff();
+			*/
+
+
+		return_values_from_joystick = adc_getJoystickDirection();
+		if(return_values_from_joystick==0)
+		{
+			led_redOn();
+			led_greenOff();
+			led_yellowOff();
+		}
+		else if(return_values_from_joystick==1)
+		{
+			led_redOff();
+		    led_greenOn();
+			led_yellowOff();
+		}
+		else if(return_values_from_joystick==2)
+				{
+					led_redOff();
+				    led_greenOff();
+					led_yellowOn();
+				}
+		else if(return_values_from_joystick==3)
+				{
+					led_redOn();
+				    led_greenOn();
+					led_yellowOn();
+				}
+
+	}
+}
